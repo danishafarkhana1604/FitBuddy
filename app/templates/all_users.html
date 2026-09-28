@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-head">
+    <div><span class="eyebrow">ADMIN DASHBOARD</span><h1>Users & workout plans</h1><p>Review stored profiles and compare original versus updated plans.</p></div>
+    <div class="admin-count"><strong>{{ users|length }}</strong><span>users</span></div>
+</section>
+
+<div class="card table-card">
+    {% if users %}
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>User</th><th>Profile</th><th>Goal</th><th>Original Plan</th><th>Updated Plan</th><th>Action</th></tr></thead>
+            <tbody>
+            {% for user in users %}
+            <tr id="user-row-{{ user.user_id }}">
+                <td><strong>{{ user.name }}</strong><small>{{ user.user_id }}</small></td>
+                <td>{{ user.age }} yrs<br>{{ user.weight }} kg<br>{{ user.intensity|title }}</td>
+                <td><span class="tag">{{ user.goal|title }}</span><br><small>{{ user.experience_level|title }} · {{ user.days_per_week }}d/wk</small></td>
+                <td><pre class="table-plan">{{ user.plan.original_plan if user.plan else 'No plan' }}</pre></td>
+                <td><pre class="table-plan">{{ user.plan.updated_plan if user.plan and user.plan.updated_plan else 'Not updated yet' }}</pre></td>
+                <td><button class="danger-btn" onclick="deleteUser('{{ user.user_id }}')">Delete</button></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state"><div>📋</div><h2>No users yet</h2><p>Generate your first FitBuddy plan to see it here.</p><a class="primary-btn inline-btn" href="/">Create plan</a></div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+async function deleteUser(userId) {
+    if (!confirm(`Delete user ${userId} and their plan?`)) return;
+    const response = await fetch(`/admin/users/${encodeURIComponent(userId)}`, {method: 'DELETE'});
+    if (response.ok) document.getElementById(`user-row-${CSS.escape(userId)}`)?.remove();
+    else alert('Could not delete the user.');
+}
+</script>
+{% endblock %}

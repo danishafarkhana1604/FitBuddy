@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="center-wrap">
+    <div class="card feedback-form-card">
+        <span class="eyebrow">ADAPT YOUR ROUTINE</span>
+        <h1>Share your feedback</h1>
+        <p class="lead">Tell FitBuddy what you want changed in your existing plan. Be specific for a more useful revision.</p>
+        <form action="/submit-feedback" method="post" class="fit-form">
+            <label>User ID<input id="feedback-user-id" name="user_id" placeholder="e.g. FB1001" required maxlength="50"></label>
+            <label>Your feedback
+                <textarea name="feedback" rows="7" maxlength="2000" required placeholder="Example: Add more cardio, reduce high-impact exercises, and keep one extra recovery day."></textarea>
+            </label>
+            <button class="primary-btn" type="submit">Update My Plan <span>→</span></button>
+        </form>
+        <a class="text-link" href="/">← Back to generator</a>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('user_id');
+    if (id) document.getElementById('feedback-user-id').value = id;
+</script>
+{% endblock %}

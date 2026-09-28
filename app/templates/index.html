@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-grid">
+    <div class="hero-copy">
+        <span class="eyebrow">AI-POWERED FITNESS COACH</span>
+        <h1>Your plan.<br><span>Your pace.</span><br>Your progress.</h1>
+        <p>Tell FitBuddy about your goal, experience and preferred intensity. Get a structured 7-day workout plan and a practical nutrition or recovery tip.</p>
+        <div class="feature-row">
+            <div><strong>7</strong><span>day plan</span></div>
+            <div><strong>AI</strong><span>personalized</span></div>
+            <div><strong>↻</strong><span>feedback loop</span></div>
+        </div>
+    </div>
+
+    <div class="card form-card">
+        <div class="card-heading">
+            <div>
+                <span class="small-label">GET STARTED</span>
+                <h2>Build your plan</h2>
+            </div>
+            <span class="spark">✦</span>
+        </div>
+        <form action="/generate-workout" method="post" class="fit-form">
+            <div class="form-grid two">
+                <label>Name<input name="name" placeholder="e.g. Arun" required maxlength="100"></label>
+                <label>User ID<input name="user_id" placeholder="e.g. FB1001" required maxlength="50"></label>
+            </div>
+            <div class="form-grid two">
+                <label>Age<input type="number" name="age" min="13" max="100" placeholder="21" required></label>
+                <label>Weight (kg)<input type="number" name="weight" min="20" max="300" step="0.1" placeholder="70" required></label>
+            </div>
+            <div class="form-grid two">
+                <label>Fitness goal
+                    <select name="goal" required>
+                        <option value="weight loss">Weight loss</option>
+                        <option value="muscle gain">Muscle gain</option>
+                        <option value="general wellness">General wellness</option>
+                        <option value="flexibility">Flexibility</option>
+                        <option value="endurance">Endurance</option>
+                    </select>
+                </label>
+                <label>Intensity
+                    <select name="intensity" required>
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-grid two">
+                <label>Experience level
+                    <select name="experience_level" required>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </label>
+                <label>Training days / week
+                    <select name="days_per_week" required>
+                        <option value="2">2 days</option><option value="3">3 days</option>
+                        <option value="4">4 days</option><option value="5" selected>5 days</option>
+                        <option value="6">6 days</option><option value="7">7 days</option>
+                    </select>
+                </label>
+            </div>
+            <button class="primary-btn" type="submit">Generate My 7-Day Plan <span>→</span></button>
+        </form>
+        <p class="form-note">Your details are stored locally in SQLite for this project. This is not medical advice.</p>
+    </div>
+</section>
+
+<section class="info-strip">
+    <div><span class="info-icon">01</span><div><h3>Personalized</h3><p>Goal, intensity, experience and schedule shape the plan.</p></div></div>
+    <div><span class="info-icon">02</span><div><h3>Actionable</h3><p>Warm-up, exercises, sets, reps, rest and cooldowns.</p></div></div>
+    <div><span class="info-icon">03</span><div><h3>Adaptive</h3><p>Submit feedback and regenerate your workout plan.</p></div></div>
+</section>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-head">
+    <div><span class="eyebrow">YOUR FITBUDDY PLAN</span><h1>Personalized for {{ user.name }}</h1><p>Here is your current 7-day training plan and nutrition/recovery guidance.</p></div>
+    <a class="secondary-btn" href="/">← New plan</a>
+</section>
+
+<section class="profile-grid">
+    <div class="profile-item"><span>Name</span><strong>{{ user.name }}</strong></div>
+    <div class="profile-item"><span>User ID</span><strong>{{ user.user_id }}</strong></div>
+    <div class="profile-item"><span>Age</span><strong>{{ user.age }}</strong></div>
+    <div class="profile-item"><span>Weight</span><strong>{{ user.weight }} kg</strong></div>
+    <div class="profile-item"><span>Goal</span><strong>{{ user.goal|title }}</strong></div>
+    <div class="profile-item"><span>Intensity</span><strong>{{ user.intensity|title }}</strong></div>
+    <div class="profile-item"><span>Experience</span><strong>{{ user.experience_level|title }}</strong></div>
+    <div class="profile-item"><span>Days / week</span><strong>{{ user.days_per_week }}</strong></div>
+</section>
+
+<section class="result-grid">
+    <article class="card plan-card">
+        <div class="section-title"><span class="title-icon">🏋️</span><div><span class="small-label">ORIGINAL PLAN</span><h2>7-Day Workout</h2></div></div>
+        <pre class="plan-output">{{ plan.original_plan }}</pre>
+    </article>
+
+    <aside class="side-stack">
+        <div class="card tip-card">
+            <div class="section-title"><span class="title-icon">💡</span><div><span class="small-label">GEMINI TIP</span><h2>Nutrition & Recovery</h2></div></div>
+            <p>{{ plan.nutrition_tip }}</p>
+        </div>
+                <div class="card feedback-card">
+
+            <div class="section-title">
+                <span class="title-icon">💬</span>
+
+                <div>
+                    <span class="small-label">FEEDBACK LOOP</span>
+                    <h2>Update Your Plan</h2>
+                </div>
+            </div>
+
+            <p>
+                Tell FitBuddy what you want to change in your current workout plan.
+            </p>
+
+            <form action="/submit-feedback" method="post" class="fit-form">
+
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ user.user_id }}"
+                >
+
+                <label>
+                    Your Feedback
+
+                    <textarea
+                        name="feedback"
+                        rows="5"
+                        maxlength="2000"
+                        required
+                        placeholder="Example: Add more cardio and give me one extra rest day."
+                    ></textarea>
+                </label>
+
+                <button
+                    class="primary-btn"
+                    type="submit"
+                >
+                    Update My Plan →
+                </button>
+
+            </form>
+
+        </div>
+</section>
+
+{% if plan.updated_plan %}
+<section class="card updated-card">
+    <div class="section-title"><span class="title-icon">✨</span><div><span class="small-label">UPDATED PLAN</span><h2>After Your Feedback</h2></div></div>
+    <div class="feedback-quote">“{{ plan.feedback }}”</div>
+    <pre class="plan-output">{{ plan.updated_plan }}</pre>
+</section>
+{% endif %}
+{% endblock %}

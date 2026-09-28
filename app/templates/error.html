@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="center-wrap">
+    <div class="card error-card">
+        <div class="error-icon">!</div>
+        <span class="eyebrow">SOMETHING WENT WRONG</span>
+        <h1>{{ page_title }}</h1>
+        <p>{{ error }}</p>
+        <div class="button-row"><a class="primary-btn inline-btn" href="/">Back to Home</a><a class="secondary-btn" href="/docs">Open API Docs</a></div>
+    </div>
+</section>
+{% endblock %}
